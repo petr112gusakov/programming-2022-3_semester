@@ -1,0 +1,5 @@
+﻿  Source.cpp
+C:\Users\pitpi\source\repos\shared_ptr\shared_ptr\Source.cpp(28,3): warning C4984: "if constexpr" — расширение языка C++17
+C:\Users\pitpi\source\repos\shared_ptr\shared_ptr\Source.cpp(84): message : выполняется компиляция ссылки на экземпляр класс шаблон функции "shared_ptr<T>"
+C:\Users\pitpi\source\repos\shared_ptr\shared_ptr\Source.cpp(37,3): warning C4984: "if constexpr" — расширение языка C++17
+  shared_ptr.vcxproj -> C:\Users\pitpi\source\repos\shared_ptr\Debug\shared_ptr.exe
