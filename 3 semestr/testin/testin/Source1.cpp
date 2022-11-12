@@ -32,10 +32,10 @@ private:
 	}
 	std::vector<std::string> find_w_question(const std::string& str) {
 		std::vector<std::string> res;
-		std::pair<std::vector<char>, std::vector<size_t>> res_pair = check(str).second;
+		std::pair<std::vector<char>, std::vector<size_t>> res_pair = std::move(check(str).second);
 		size_t f = res_pair.first.size();
-		std::vector<size_t> cv = res_pair.second;
-		std::vector<char> v = res_pair.first;
+		std::vector<size_t> cv = std::move(res_pair.second);
+		std::vector<char> v = std::move(res_pair.first);
 		size_t c = 0;
 		for (auto el : mp[str.size()]) {
 			if (f == 0) res.push_back(el);
