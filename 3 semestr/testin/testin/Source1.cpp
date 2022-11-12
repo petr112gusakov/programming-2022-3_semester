@@ -1,14 +1,24 @@
 #include<iostream>
 #include<vector>
 #include<string>
-#include<unordered_map>
+#include<unordered_set>
 #include<set>
+
+// В полях класса лежит вектор к.ч деревьев из строк (mp),и хэш таблица из строки(как ключа). Если мне нужно вставить слово,
+// то оно вставится в un_set за О(1) и в нужную ячейку вектора за О(log n), где n число слов той же длинны, что и вставляемое.(61 строка)
+// поиск и вставка за тоже время.
+
+
+
+
+
 class dictionary {
 	std::vector<std::set<std::string>> mp;
-	std::unordered_map<std::string, std::vector<std::set<std::string>>> dict;
+	std::unordered_set<std::string> dict;
 public:
 	dictionary() : dict(), mp() {}
-	std::pair<bool,std::pair<std::vector<char>, std::vector<size_t>>> check (const std::string& str) {
+private:
+	std::pair<bool, std::pair<std::vector<char>, std::vector<size_t>>> check(const std::string& str) {
 		std::vector<size_t> cv;
 		std::vector<char> v;
 		for (size_t i = 0; i < str.size(); ++i) {
@@ -22,7 +32,7 @@ public:
 	}
 	std::vector<std::string> find_w_question(const std::string& str) {
 		std::vector<std::string> res;
-		std::pair<std::vector<char>, std::vector<size_t>> res_pair=check(str).second;
+		std::pair<std::vector<char>, std::vector<size_t>> res_pair = check(str).second;
 		size_t f = res_pair.first.size();
 		std::vector<size_t> cv = res_pair.second;
 		std::vector<char> v = res_pair.first;
@@ -30,9 +40,9 @@ public:
 		for (auto el : mp[str.size()]) {
 			if (f == 0) res.push_back(el);
 			else {
-				for (size_t i = 0; i<f; ++i) {
+				for (size_t i = 0; i < f; ++i) {
 					if (el[cv[i]] == v[i]) {
-						++c;	
+						++c;
 					}
 				}
 				if (c == f) {
@@ -44,23 +54,24 @@ public:
 		}
 		return res;
 	}
+public:
 	void insert(const std::string& str) {
-		mp.resize(str.size()+100);
+		mp.resize(str.size() + 100);
 		mp[str.size()].insert(str);
-		dict.insert({str, std::vector<std::set<std::string>> ()});
+		dict.insert( str);
 	}
 	void find(const std::string& str) {
 		if (check(str).first) {
 			for (auto el : find_w_question(str)) {
-				std::cout << el<<" ";
+				std::cout << el << " ";
 			}
 		}
 		else {
-			std::cout<<(*dict.find(str)).first<<" ";
+			std::cout << *dict.find(str) << " ";
 		}
 		std::cout << std::endl;
 	}
-	void erase(const std::string& str){
+	void erase(const std::string& str) {
 		dict.erase(str);
 		mp[str.size()].erase(str);
 	}
@@ -83,6 +94,8 @@ int main() {
 	a.find("asdr");
 	a.find("app??");
 	a.erase("apple");
+	//a.find("apple");// исключение от метода find контейнера unordered_map;
+	a.find("a??le");// ok;
 	a.insert("awgrytpplrsetrdyttrewedrgtje");
-	a.find  ("???????????e????????w???????");
+	a.find("???????????e????????w???????");
 }
